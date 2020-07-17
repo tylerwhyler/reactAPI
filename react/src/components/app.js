@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import axios from "axios";
 
 import NavigationContainer from "./navigation/navigation-container";
 import Home from "./pages/home";
@@ -34,13 +35,53 @@ export default class App extends Component {
     })
   }
 
+  checkLoginStatus() {
+    return axios.get("https://api.devcamp.space/logged_in", { withCredentials: true })
+    .then(res => {
+      const loggedIn = res.data.logged_in;
+      const loggedInStatus = this.state.loggedInStatus;
+
+      // If loggedIn and status LOGGED_IN => return data
+      // If loggedIn and status NOT_LOGGED_IN => update state LOGGED_IN
+      // If not loggedIn and status LOGGED_IN => update state NOT_LOGGED_IN
+      if (loggedIn && loggedInStatus === "LOGGED_IN") {
+        return loggedIn;
+      } else if (loggedIn && loggedInStatus === "NOT_LOGGED_IN") {
+        this.setState({
+          loggedInStatus: "LOGGED_IN"
+        });
+      } else if (!loggedIn && loggedInStatus === "LOGGED_IN") {
+        this.setState({
+          loggedInStatus: "NOT_LOGGED_IN"
+        });
+      }
+      
+    })
+    .catch(error => {
+      console.log("Error", error)
+    });
+  }
+
+  componentDidMount() {
+    this.checkLoginStatus();
+  }
+
+  authorizedPages() {
+    return [
+      <Route 
+        path="/blog" 
+        component={Blog} 
+      />
+    ]
+  }
+
   render() {
 
     return (
       <div className="container">
         <Router>
           <div>
-            <NavigationContainer />
+            <NavigationContainer loggedInStatus={this.state.loggedInStatus} />
 
             <h2>{this.state.loggedInStatus}</h2>
 
@@ -64,14 +105,18 @@ export default class App extends Component {
               />
 
               <Route 
-              path="/contact" 
-              component={Contact} 
+                path="/contact" 
+                component={Contact} 
               />
+              
+              {this.state.loggedInStatus === "LOGGED_IN" ? this.authorizedPages() : null}
 
-              <Route 
+              
+
+              {/* <Route 
               path="/blog" 
               component={Blog} 
-              />
+              /> */}
 
               <Route
                 exact
