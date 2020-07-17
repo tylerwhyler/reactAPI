@@ -23,14 +23,26 @@ export default class Login extends React.Component {
             }, { withCredentials: true }
         )
         .then(res => {
-            console.log("response", res);
+            if (res.data.status === "created") {
+                console.log("come on in")
+            } else {
+                this.setState({
+                    errorText: "Wrong email or password"
+                })
+            }
+        }).catch(error => {
+            this.setState({
+                errorText: "An error occurred"
+            })
         });
+
         event.preventDefault()
     }
 
     handleChange(event) {
         this.setState({
-            [event.target.name]: event.target.value
+            [event.target.name]: event.target.value,
+            errorText: ""
         })
     }
 
@@ -38,6 +50,9 @@ export default class Login extends React.Component {
         return (
             <div>
                 <h1>LOGIN TO ACCES YOUR DASHBOARD</h1>
+
+                <div>{this.state.errorText}</div>
+
                 <form onSubmit={this.handleSubmit}>
                     <input 
                         type="email"
