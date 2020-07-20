@@ -7,11 +7,11 @@ const NavigationComponent = props => {
     const dynamicLink = (route, linkText) => {
         return (
             <div className="nav-link-wrapper">
-                <NavLink to="/blog" activeClassName="nav-link-active">Blog</NavLink>
+                <NavLink to={route} activeClassName="nav-link-active">{linkText}</NavLink>
             </div>
         )
     }
-            
+
     const handleSignOut = () => {
         axios.delete("https://api.devcamp.space/logout", {
             withCredentials: true
@@ -41,14 +41,17 @@ const NavigationComponent = props => {
                     <NavLink to="/contact" activeClassName="nav-link-active">Contact</NavLink>
                 </div>
 
-                {props.loggedInStatus === "LOGGED_IN" ? dynamicLink("/blog", "Blog") : null }
+                <div className="nav-link-wrapper">
+                    <NavLink to="/blog" activeClassName="nav-link-active">Blog</NavLink>
+                </div>
+
+                {props.loggedInStatus === "LOGGED_IN" ? dynamicLink("/portfolio-manager", "Portfolio Manager") : null }
 
             </div>
            
 
             <div className="right-side">
-                Tyler
-                {props.loggedInStatus === "LOGGED_IN" ? <a onClick={handleSignOut}>Sign Out</a> 
+                {props.loggedInStatus === "LOGGED_IN" ? <a onClick={handleSignOut}>Tyler Sign Out</a> 
                 : null }
             </div>
         </div>
