@@ -1,5 +1,7 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
+import React from 'react';
+import axios from "axios";
+import { withRouter } from "react-router";
+import { NavLink } from 'react-router-dom';
 
 const NavigationComponent = props => {
     const dynamicLink = (route, linkText) => {
@@ -10,7 +12,19 @@ const NavigationComponent = props => {
         )
     }
             
-
+    const handleSignOut = () => {
+        axios.delete("https://api.devcamp.space/logout", {
+            withCredentials: true
+        })  .then(res => {
+            if (res.status === 200) {
+                props.history.push("/");
+                props.handleSuccessfulLogOut();
+            }
+            return res.data
+        }) .catch(err => {
+            console.log(err)
+        })
+    }
         return (
         <div className="nav-wrapper">
             <div className="left-side">
@@ -34,9 +48,11 @@ const NavigationComponent = props => {
 
             <div className="right-side">
                 Tyler
+                {props.loggedInStatus === "LOGGED_IN" ? <a onClick={handleSignOut}>Sign Out</a> 
+                : null }
             </div>
         </div>
         )
 }
 
-export default NavigationComponent;
+export default withRouter(NavigationComponent);
