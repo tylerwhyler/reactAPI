@@ -17,6 +17,10 @@ export default class PortfolioManager extends React.Component {
 
     handleSuccessfulFormSubmission(portfolioItem) {
         // TODO
+        console.log(portfolioItem)
+        this.setState({
+            portfolioItems: [portfolioItem].concat(this.state.portfolioItems)
+        })
     }
 
     handleFormSubmissionError(error) {
@@ -24,7 +28,7 @@ export default class PortfolioManager extends React.Component {
     }
 
     getPortfolioItems() {
-        axios.get("https://tyji.devcamp.space/portfolio/portfolio_items", { withCredentials: true})
+        axios.get("https://tyji.devcamp.space/portfolio/portfolio_items?order_by=created_at&direction=desc", { withCredentials: true})
         .then(res => {
             this.setState({
                 portfolioItems: [...res.data.portfolio_items]
