@@ -1,0 +1,21 @@
+.content-page-wrapper {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: calc(100vh - 83px);
+}
+
+.right-column {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 100px;
+
+    .contact-info-wrapper {
+        height: 120px;
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+    }
+}
