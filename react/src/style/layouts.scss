@@ -10,12 +10,23 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    padding: 100px;
 
-    .contact-info-wrapper {
-        height: 120px;
-        display: flex;
-        justify-content: space-between;
-        flex-direction: column;
+
+    .contact-info-container {
+        height: 170px;
+        display: grid;
+        grid-template-rows: 1fr 1fr;
+
+        .contact-info-wrapper {
+            display: flex;
+            align-items: center;
+        }
+
+        .carrot {
+            color: $teal;
+            font-size: 2em;
+            margin-right: 6px;
+            margin-bottom: 5px;
+        }
     }
 }

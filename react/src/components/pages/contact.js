@@ -13,15 +13,16 @@ export default function() {
       }}>
       </div>
       <div className="right-column">
-        <div className="contact-info-wrapper">
-          <div>
-            <div>></div>
-            Phone: (503)-555-1337
+        <div className="contact-info-container">
+          <div className="contact-info-wrapper">
+            <div className="carrot">-</div>
+            <div>(503)-555-1337</div>
           </div>
 
-          <div>
-            We're on easy street,
-            and feels so neat
+          <div className="contact-info-wrapper">
+            <div className="carrot">-</div>
+            <div>We're on easy street,
+            and feels so neat</div>
           </div>
           
         </div>
